@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AlgoDataStructures\AlgoDataStructures.csproj" />
+    <ProjectReference Include="..\CodeWars\CodeWars.csproj" />
   </ItemGroup>
 
 </Project>
