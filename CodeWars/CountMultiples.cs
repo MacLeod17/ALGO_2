@@ -1,24 +1,30 @@
-﻿
+﻿using System;
+
 namespace CodeWars
 {
-    public class CountMultiples
+    public static class CountMultiples
     {
         // n Number Of Primes, All Factors Of Primes Under mxval
         public static long CountSpecMult(long n, long mxval)
         {
+            //Console.WriteLine($"N: {n}");
+            //Console.WriteLine($"Max Value: {mxval}");
+
             // Stores First n Primes
             long[] primes = new long[n];
             long count = 0;
 
             // Gets n Number of Primes
-            bool isValid = true;
+            bool isValid;
 
-            for (long i = 2; count < n; i++)
+            long i, j;
+
+            for (i = 2; count < n; i++)
             {
                 isValid = true;
 
                 // Checks If Current Number Is Not Prime
-                for (long j = i-1; j > 1; j--)
+                for (j = i-1; j-1 > 0; j--)
                 {
                     if (i % j == 0)
                     {
@@ -37,12 +43,12 @@ namespace CodeWars
 
             count = 0;
             // Checks All Natural Numbers Under mxval for Multiples of all Primes
-            for (long i=mxval-1; i > 1; i--)
+            for (i=mxval-1; i-1 > 0; i--)
             {
                 isValid = true;
 
                 // Makes Sure i Is A Multiple Of Every Given Prime
-                for (long j = n-1; j > -1; j--)
+                for (j = n-1; j+1 > 0; j--)
                 {
                     if (i % primes[j] != 0)
                     {
