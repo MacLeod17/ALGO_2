@@ -4,9 +4,17 @@ using System.Text;
 
 namespace AlgoDataStructures
 {
+    public class DNode<T>
+    {
+        public T Value { get; set; }
+        public DNode<T> Next { get; set; }
+        public DNode<T> Previous { get; set; }
+    }
+
     public class DoubleLinkedList<T> where T : IComparable<T>
     {
         public int Count { get; set; }
+        public DNode<T> Head { get; set; }
 
         public void Add(T val)
         {

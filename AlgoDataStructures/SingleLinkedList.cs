@@ -4,9 +4,16 @@ using System.Text;
 
 namespace AlgoDataStructures
 {
+    public class SNode<T>
+    {
+        public T Value { get; set; }
+        public SNode<T> Next { get; set; }
+    }
+
     public class SingleLinkedList<T> where T : IComparable<T>
     {
         public int Count { get; set; }
+        public SNode<T> Head { get; set; }
 
         public void Add(T val)
         {
