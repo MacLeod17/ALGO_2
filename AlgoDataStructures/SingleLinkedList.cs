@@ -4,10 +4,17 @@ using System.Text;
 
 namespace AlgoDataStructures
 {
-    public class SNode<T>
+    public class SNode<T> where T : IComparable<T>
     {
         public T Value { get; set; }
         public SNode<T> Next { get; set; }
+
+        public SNode() { }
+
+        public SNode(T val)
+        {
+            Value = val;
+        }
     }
 
     public class SingleLinkedList<T> where T : IComparable<T>
@@ -15,6 +22,7 @@ namespace AlgoDataStructures
         public int Count { get; set; }
         public SNode<T> Head { get; set; }
 
+        /* Puts a new value at the Tail end of the list */
         public void Add(T val)
         {
             /*
@@ -24,25 +32,90 @@ namespace AlgoDataStructures
 
             Count++
             */
+
+            SNode<T> newNode = new SNode<T>(val);
+
+            if (Head == null) Head = newNode;
+
+            else
+            {
+                SNode<T> tail = Head;
+
+                while (tail.Next != null)
+                {
+                    tail = tail.Next;
+                }
+
+                tail.Next = newNode;
+            }
+            Count++;
         }
 
+        /* Removes all values in the list */
         public void Clear()
         {
             /*
             Set Head to Null and everything will die
             */
+
+            Head = null;
+            Count = 0;
         }
 
+        /* Returns the value at the given index. Any index less than zero or equal 
+         * to or greater than Count should throw an index out of bounds exception */
         public T Get(int index)
         {
-            return default;
+            if (index < 0 || index >= Count)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+            SNode<T> node = Head;
+
+            for (int i = 0; i < index; i++)
+            {
+                node = node.Next;
+            }
+
+            return node.Value;
         }
 
-        public T Insert(T val, int index)
+        /* Inserts a new value at a given index, pushing the existing value at that index to the next index spot, and so on. 
+         * Insert may ONLY target indices that are currently in use. In other words, if you have 5 elements in your list, 
+         * you may insert at any index between 0 and 4 inclusive. Index 5 would be considered out of bounds as it is not 
+         * currently in use during the insertion process. Any index less than zero or equal to or greater than Count should 
+         * throw an index out of bounds exception */
+        public void Insert(T val, int index)
         {
-            return default;
+            if (index < 0 || index >= Count)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+            SNode<T> newNode = new SNode<T>(val);
+            if (index == 0)
+            {
+                newNode.Next = Head;
+                Head = newNode;
+                return;
+            }
+
+            SNode<T> prevNode = Head;
+
+            int currentIndex = 1;
+            while (currentIndex < index)
+            {
+                prevNode = prevNode.Next;
+                currentIndex++;
+            }
+
+            newNode.Next = prevNode.Next;
+            prevNode.Next = newNode;
+            Count++;
         }
 
+        /* Removes and returns the first value in the list */
         public T Remove()
         {
             /*
@@ -51,10 +124,16 @@ namespace AlgoDataStructures
             return firstValue
             */
 
-            return default;
+            T value = Head.Value;
+            Head = Head.Next;
+            Count--;
+
+            return value;
         }
 
-        public T RemoveAt(int value)
+        /* Removes and returns the value at a given index. Any index less than zero or 
+         * equal to or greater than Count should throw an index out of bounds exception */
+        public T RemoveAt(int index)
         {
             /*
             indexToFind = x
@@ -70,10 +149,37 @@ namespace AlgoDataStructures
 
             count--
             */
+            if (index < 0 || index >= Count)
+            {
+                throw new IndexOutOfRangeException();
+            }
 
-            return default;
+            T value;
+            if (index == 0)
+            {
+                value = Head.Value;
+                Head = Head.Next;
+                Count--;
+                return value;
+            }
+
+            SNode<T> prevNode = Head;
+
+            int currentIndex = 0;
+            while (currentIndex < index-1)
+            {
+                prevNode = prevNode.Next;
+                currentIndex++;
+            }
+
+            value = prevNode.Next.Value;
+            prevNode.Next = prevNode.Next.Next;
+            Count--;
+
+            return value;
         }
 
+        /* Removes and returns the last value in the list */
         public T RemoveLast()
         {
             /*
@@ -98,18 +204,72 @@ namespace AlgoDataStructures
             secondToLast.next.value
             secondToLast.next = null
             */
+            if (Head == null)
+            {
+                return default;
+            }
 
-            return default;
+            T value;
+            if (Head.Next == null)
+            {
+                value = Head.Value;
+                Head = null;
+                return value;
+            }
+
+            SNode<T> secondToLast = Head;
+
+            while (secondToLast.Next.Next != null)
+            {
+                secondToLast = secondToLast.Next;
+            }
+
+            value = secondToLast.Next.Value;
+            secondToLast.Next = null;
+            Count--;
+
+            return value;
         }
 
+        /* Searches for a value in the list and returns the first index of that value 
+         * when found. If the key is not found in the list, the method returns -1 */
         public int Search(T val)
         {
-            return default;
+            int index = -1;
+
+            SNode<T> node = Head;
+
+            for (int i = 0; i < Count; i++)
+            {
+                if (node.Value.Equals(val))
+                {
+                    index = i;
+                    break;
+                }
+                node = node.Next;
+            }
+
+            return index;
         }
 
         public override string ToString()
         {
-            return base.ToString();
+            string list = string.Empty;
+
+            if (Head == null) return list;
+
+            SNode<T> node = Head;
+
+            list += node.Value;
+            node = node.Next;
+
+            while (node != null)
+            {
+                list += $", {node.Value}";
+                node = node.Next;
+            }
+
+            return list;
         }
     }
 }
