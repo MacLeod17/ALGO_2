@@ -239,7 +239,7 @@ namespace AVLUnitTester
 
             avl.Remove(24);
 
-            string expected = "1337, 10";
+            string expected = "10, 1337";
             string actual = ArrayToString(avl.ToArray());
 
             Assert.AreEqual(expected, actual);
@@ -267,7 +267,7 @@ namespace AVLUnitTester
 
             avl.Remove(10);
 
-            string expected = "24, 11, 1337, 8, 12, 100, 1400, 7, 9, 13, 90, 110, 1350, 1500";
+            string expected = "24, 9, 1337, 8, 12, 100, 1400, 7, 11, 13, 90, 110, 1350, 1500";
             string actual = ArrayToString(avl.ToArray());
 
             Assert.AreEqual(expected, actual);
@@ -295,7 +295,7 @@ namespace AVLUnitTester
 
             avl.Remove(1337);
 
-            string expected = "24, 10, 1350, 8, 12, 100, 1400, 7, 9, 11, 13, 90, 110, 1500";
+            string expected = "24, 10, 110, 8, 12, 100, 1400, 7, 9, 11, 13, 90, 1350, 1500";
             string actual = ArrayToString(avl.ToArray());
 
             Assert.AreEqual(expected, actual);
@@ -323,7 +323,7 @@ namespace AVLUnitTester
 
             avl.Remove(24);
 
-            string expected = "90, 10, 1337, 8, 12, 100, 1400, 7, 9, 11, 13, 110, 1350, 1500";
+            string expected = "13, 10, 1337, 8, 12, 100, 1400, 7, 9, 11, 90, 110, 1350, 1500";
             string actual = ArrayToString(avl.ToArray());
 
             Assert.AreEqual(expected, actual);

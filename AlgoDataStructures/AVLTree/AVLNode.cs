@@ -19,19 +19,103 @@ namespace AlgoDataStructures
         }
 
         #region AVL Methods
-        public void Add(T val)
+        public int BalanceFactor()
         {
-            // Not Modified Yet
+            int leftHeight = (Left != null) ? Left.Height() : 0;
+            int rightHeight = (Right != null) ? Right.Height() : 0;
+
+            return leftHeight - rightHeight;
+        }
+
+        public AVLNode<T> Add(T val)
+        {
             if (val.CompareTo(Data) < 0)
             {
-                if (Left == null) Left = new AVLNode<T>(val) { Parent = this };
-                else Left.Add(val);
+                if (Left == null)
+                {
+                    Left = new AVLNode<T>(val) { Parent = this };
+                }
+                else Left = Left.Add(val);
             }
             if (val.CompareTo(Data) > 0)
             {
-                if (Right == null) Right = new AVLNode<T>(val) { Parent = this };
-                else Right.Add(val);
+                if (Right == null)
+                {
+                    Right = new AVLNode<T>(val) { Parent = this };
+                }
+                else Right = Right.Add(val);
             }
+
+            return CheckNodeBalance(this);
+        }
+
+        public AVLNode<T> CheckNodeBalance(AVLNode<T> currentNode)
+        {
+            // Balance Factor
+            int bf = BalanceFactor();
+            int bfLeft = (Left != null) ? Left.BalanceFactor() : 0;
+            int bfRight = (Right != null) ? Right.BalanceFactor() : 0;
+
+            // Check BalanceFactor
+            if (bf < -1)
+            {
+                // -2, -1 Call LL
+                if (bfRight == -1)
+                {
+                    currentNode = LL_Rotation(this);
+                }
+
+                // -2, 1 Call RL
+                if (bfRight == 1)
+                {
+                    currentNode = RL_Rotation(this);
+                }
+            }
+            else if (bf > 1)
+            {
+                // 2, 1 Call RR
+                if (bfLeft == 1)
+                {
+                    currentNode = RR_Rotation(this);
+                }
+
+                // 2, -1 Call LR
+                else if (bfLeft == -1)
+                {
+                    currentNode = LR_Rotation(this);
+                }
+            }
+
+            return currentNode;
+        }
+
+        public AVLNode<T> Remove(AVLNode<T> node, T val)
+        {
+            if (val.CompareTo(node.Data) < 0)
+            {
+                node.Left = Remove(node.Left, val);
+            }
+            else if (val.CompareTo(node.Data) > 0)
+            {
+                node.Right = Remove(node.Right, val);
+            }
+            else
+            {
+                if (node.Left == null)
+                {
+                    return node.Right;
+                }
+                else if (node.Right == null)
+                {
+                    return node.Left;
+                }
+                node.Data = MaxValue(node.Left);
+                node.Left = Remove(node.Left, node.Data);
+            }
+
+            node = node.CheckNodeBalance(node);
+
+            return node;
         }
 
         public AVLNode<T> RR_Rotation(AVLNode<T> unbalanced)
@@ -56,30 +140,50 @@ namespace AlgoDataStructures
 
         public AVLNode<T> RL_Rotation(AVLNode<T> unbalanced)
         {
-            // Not Modified Yet
-            return default;
+            AVLNode<T> pivot = unbalanced.Right.Left;
+            var temp = pivot.Right;
+            if (temp != null)
+            {
+                temp.Right = pivot.Right.Right;
+                temp.Left = pivot.Right.Left;
+            }
+            pivot.Right = unbalanced.Right;
+            unbalanced.Right.Left = temp;
+            unbalanced.Right = pivot;
+            return LL_Rotation(unbalanced);
         }
 
         public AVLNode<T> LR_Rotation(AVLNode<T> unbalanced)
         {
-            // Not Modified Yet
-            return default;
+            AVLNode<T> pivot = unbalanced.Left.Right;
+            var temp = pivot.Left;
+            if (temp != null)
+            {
+                temp.Right = pivot.Left.Right;
+                temp.Left = pivot.Left.Left;
+            }
+            pivot.Left = unbalanced.Left;
+            unbalanced.Left.Right = temp;
+            unbalanced.Left = pivot;
+            return RR_Rotation(unbalanced);
         }
 
-        public int ToArray(T[] newArrayWithData, int index)
+        public int ToArray(T[] newArrayWithData, int levelToPrint, int index)
         {
-            // Not Modified Yet
+            if (levelToPrint == 0)
+            {
+                // Assign Value To Array
+                newArrayWithData[index++] = Data;
+            }
 
-            // Left Root Right
+            // Root Left Right
             if (Left != null)
             {
-                index = Left.ToArray(newArrayWithData, index);
+                index = Left.ToArray(newArrayWithData, levelToPrint - 1, index);
             }
-            // Assign Value To Array
-            newArrayWithData[index++] = Data;
             if (Right != null)
             {
-                index = Right.ToArray(newArrayWithData, index);
+                index = Right.ToArray(newArrayWithData, levelToPrint - 1, index);
             }
 
             return index;
@@ -151,33 +255,6 @@ namespace AlgoDataStructures
             if (Right != null && val.CompareTo(Data) > 0) return Right.Contains(val);
 
             return false;
-        }
-
-        public AVLNode<T> Remove(AVLNode<T> node, T val)
-        {
-            if (val.CompareTo(node.Data) < 0)
-            {
-                node.Left = Remove(node.Left, val);
-            }
-            else if (val.CompareTo(node.Data) > 0)
-            {
-                node.Right = Remove(node.Right, val);
-            }
-            else
-            {
-                if (node.Left == null)
-                {
-                    return node.Right;
-                }
-                else if (node.Right == null)
-                {
-                    return node.Left;
-                }
-                node.Data = MaxValue(node.Left);
-                node.Left = Remove(node.Left, node.Data);
-            }
-
-            return node;
         }
 
         public T MaxValue(AVLNode<T> node)

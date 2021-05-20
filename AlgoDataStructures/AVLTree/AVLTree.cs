@@ -13,7 +13,7 @@ namespace AlgoDataStructures
         public void Add(T val)
         {
             if (root == null) root = new AVLNode<T>(val);
-            else root.Add(val);
+            else root = root.Add(val);
             Count++;
         }
 
@@ -67,9 +67,15 @@ namespace AlgoDataStructures
         {
             if (root != null)
             {
+                int numLevels = root.Height();
+                int index = 0;
+
                 T[] arr = new T[Count];
 
-                root.ToArray(arr, 0);
+                for (int i=0; i < numLevels; i++)
+                {
+                    index = root.ToArray(arr, i, index);
+                }
 
                 return arr;
             }
