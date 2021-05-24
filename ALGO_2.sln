@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algo2Tests", "Algo2Tests\Algo2Tests.csproj", "{EBA07546-B448-473A-AA99-60392B1A321F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Algo2Tests", "Algo2Tests\Algo2Tests.csproj", "{EBA07546-B448-473A-AA99-60392B1A321F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgoDataStructures", "AlgoDataStructures\AlgoDataStructures.csproj", "{57BA6E3E-1EB3-447F-922A-154A3DF18F40}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlgoDataStructures", "AlgoDataStructures\AlgoDataStructures.csproj", "{57BA6E3E-1EB3-447F-922A-154A3DF18F40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeWars", "CodeWars\CodeWars.csproj", "{370186AC-BE8B-40DC-B306-C63D61BA1D16}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeWars", "CodeWars\CodeWars.csproj", "{370186AC-BE8B-40DC-B306-C63D61BA1D16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MazeSolver", "MazeSolver\MazeSolver.csproj", "{2EBBDEF9-AA9A-4E9F-B55B-D078CF5DE3A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{370186AC-BE8B-40DC-B306-C63D61BA1D16}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{370186AC-BE8B-40DC-B306-C63D61BA1D16}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{370186AC-BE8B-40DC-B306-C63D61BA1D16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EBBDEF9-AA9A-4E9F-B55B-D078CF5DE3A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EBBDEF9-AA9A-4E9F-B55B-D078CF5DE3A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EBBDEF9-AA9A-4E9F-B55B-D078CF5DE3A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EBBDEF9-AA9A-4E9F-B55B-D078CF5DE3A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
