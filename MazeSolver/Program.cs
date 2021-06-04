@@ -55,18 +55,17 @@ namespace MazeSolver
                 else
                 {
                     // Only Do Work If Line Is Not A Comment
-                    if (!val.Contains("//") || val.Equals("// Should not work"))
+                    if (!val.Contains("//"))
                     {
                         // If Line Is Empty, Find Solution For Graph
-                        if (val.Equals(string.Empty) || val.Equals("// Should not work"))
+                        if (val.Equals(string.Empty))
                         {
                             // Update Start and End Now That Lines Have Been Figured Out
                             Graph.Start = Graph.Vertices.Find(find => find.Value == Graph.Start.Value);
                             Graph.End = Graph.Vertices.Find(find => find.Value == Graph.End.Value);
 
                             // Get Solution
-                            string solution = Graph.GetSolution();
-                            Solutions.Add(solution);
+                            Solutions.Add(Graph.GetSolution());
                             Graph = new Graph();
                             count = 0;
                             continue;
@@ -89,6 +88,11 @@ namespace MazeSolver
                     }
                 }
                 count++;
+            }
+
+            if (Graph != new Graph())
+            {
+                Solutions.Add(Graph.GetSolution());
             }
         }
 

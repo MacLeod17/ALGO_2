@@ -1,0 +1,2 @@
+Socket Set: AX10, AX11, AX12, AX99, AX100
+Cable Needed: 23ft
